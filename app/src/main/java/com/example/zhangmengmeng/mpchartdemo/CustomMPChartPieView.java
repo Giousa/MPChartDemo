@@ -1,64 +1,50 @@
 package com.example.zhangmengmeng.mpchartdemo;
 
+import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.RelativeLayout;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity{
+/**
+ * Description:
+ * Author:zhangmengmeng
+ * Date:2018/9/1
+ * Email:65489469@qq.com
+ */
+public class CustomMPChartPieView extends RelativeLayout{
+
 
     private PieChart mChart;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-//        initView();
-
-        initView2();
+    public CustomMPChartPieView(Context context) {
+        this(context,null);
     }
 
-    private void initView2() {
-        ArrayList<PieEntry> entries = new ArrayList();
-        entries.add(new PieEntry(12f,"男"));
-        entries.add(new PieEntry(17f,"女"));
-        entries.add(new PieEntry(13f,"其他"));
-        entries.add(new PieEntry(13f,"人妖"));
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.green));
-        colors.add(getResources().getColor(R.color.blue));
-        colors.add(getResources().getColor(R.color.accent));
-        colors.add(getResources().getColor(R.color.red));
-
-        CustomMPChartPieView customMPChartPieView = findViewById(R.id.custom_view);
-
-        customMPChartPieView.setData(entries,colors);
+    public CustomMPChartPieView(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs,0);
     }
 
-    private void initView() {
-        mChart = findViewById(R.id.pie_chart);
+    public CustomMPChartPieView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
+        View view = View.inflate(getContext(), R.layout.item_chart_custom, this);
+        mChart = view.findViewById(R.id.pie_chart);
+
 
         mChart.setUsePercentValues(true);
         mChart.getDescription().setEnabled(false);
@@ -102,30 +88,9 @@ public class MainActivity extends AppCompatActivity{
         mChart.setEntryLabelColor(Color.WHITE);
         mChart.setEntryLabelTextSize(15f);
 
-
-        ArrayList<PieEntry> entries = new ArrayList();
-        entries.add(new PieEntry(12f,"男"));
-        entries.add(new PieEntry(17f,"女"));
-        entries.add(new PieEntry(13f,"其他"));
-        entries.add(new PieEntry(13f,"人妖"));
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(getResources().getColor(R.color.green));
-        colors.add(getResources().getColor(R.color.blue));
-        colors.add(getResources().getColor(R.color.accent));
-        colors.add(getResources().getColor(R.color.red));
-
-        setData(entries,colors);
-
-
-//        CustomMPChartPieView customMPChartPieView = (CustomMPChartPieView) findViewById(R.id.custom_view);
-
-
-//        customMPChartPieView.setData(entries,colors);
     }
 
-
-    private void setData(ArrayList<PieEntry> entries,ArrayList<Integer> colors) {
+    public void setData(ArrayList<PieEntry> entries, ArrayList<Integer> colors) {
 
         PieDataSet dataSet = new PieDataSet(entries, "");
 
